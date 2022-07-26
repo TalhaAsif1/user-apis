@@ -7,7 +7,6 @@ const userRoute = require('./userRoute')
 
 dotenv.config()
 
-
 mongoose.connect(process.env.MONGO_URL)
     .then(() => console.log('Db connection successfull'))
     .catch((err) => {
@@ -15,10 +14,11 @@ mongoose.connect(process.env.MONGO_URL)
         console.log(err)
     })
 
-
 app.use(express.json())
 app.use('/api/user',userRoute)
-
+app.use('*', (req, res) => {
+    res.status(404).json('page not found')
+})
 
 app.listen(5000, () => {
     console.log('Server is listening on port 5000')
