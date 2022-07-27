@@ -2,20 +2,24 @@ const user = require('./userModels')
 const router = require('express').Router()
 
 router.post('/add', async (req, res) => {  //add user  post
-	const newUser = new user({	first_name: req.body.first_name,
-		last_name: req.body.last_name,username: req.body.username,
-		age: req.body.age,phone_number: req.body.phone_number,email: req.body.email})
+	const newUser = new user({
+		first_name: req.body.first_name,
+		last_name: req.body.last_name, username: req.body.username,
+		age: req.body.age, phone_number: req.body.phone_number, email: req.body.email
+	})
 
-	if (!req.body.username ||!req.body.phone_number ||!req.body.email)
-	{
+	if (!req.body.username || !req.body.phone_number || !req.body.email) {
 		res.status(422).json('Some fields are missing!')
 		return
 	}
 	try {
 		const savedUser = await newUser.save()
 		res.status(200).json(savedUser)
+
+
 	} catch (err) {
-		res.status(500).json(err)
+
+		res.status(500).json('user with this credentials already exists!')
 	}
 })
 
