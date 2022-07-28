@@ -6,9 +6,8 @@ const userRoute = require('./userRoute')
 
 
 dotenv.config()
-
-mongoose.connect(process.env.MONGO_URL)
-    .then(() => console.log('Db connection successfull'))
+mongoose.connect(process.env.MONGO_URL).then(() =>
+    console.log('Db connection successfull'))
     .catch((err) => {
         console.log('Can\'t\' connect to db')
         console.log(err)

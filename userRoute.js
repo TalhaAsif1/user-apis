@@ -24,8 +24,7 @@ router.post('/add',upload,async(req, res) => {  //add user(post)
 		return
 	}
 
-	const newUser = new user({
-		first_name: req.body.first_name, last_name: req.body.last_name,
+	const newUser = new user({first_name: req.body.first_name, last_name: req.body.last_name,
 		username: req.body.username, age: req.body.age, phone_number: req.body.phone_number,
 		email: req.body.email,image: req.file.filename,})
         
@@ -43,17 +42,19 @@ router.get('/allusers', async (req, res) => {  //show all users(get)
 		const users = await user.find()
 		res.status(200).json(users)
 		}
-	catch (err) {res.status(500).json(err)}
+	catch (err) {
+		res.status(500).json(err)
+	}
 })
 
 router.put('/update/:id',upload , async (req, res) => { //update user(put)
-	try {
+	try
+	{
 		const updateduser = await user.findByIdAndUpdate(req.params.id,
-			{first_name: req.body.first_name,last_name: req.body.last_name,
+			{	first_name: req.body.first_name,last_name: req.body.last_name,
 				username: req.body.username, age: req.body.age, phone_number: req.body.phone_number,
 				email: req.body.email,image:req.file.filename
-			},
-			{ new: true }
+			},{ new: true }
 	)
 		console.log(updateduser)
 		res.status(200).json(updateduser)
@@ -62,10 +63,13 @@ router.put('/update/:id',upload , async (req, res) => { //update user(put)
 })
 
 router.delete('/delete/:id', async (req, res) => {  //delete user(delete)
-	try {
+	try
+	{
 		await user.findByIdAndDelete(req.params.id)
 		res.status(200).json('User has been deleted')
-		}
-	catch (err) {res.status(500).json(err)}
+	}
+	catch (err) {
+		res.status(500).json(err)
+	}
 })
 module.exports=router
